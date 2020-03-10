@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docs": "typedoc"
+    "docs": "compodoc -p tsconfig.json -s"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.14",
@@ -34,6 +34,7 @@
     "winston-log2gelf": "^2.1.0"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.11",
     "@nestjs/cli": "^6.13.2",
     "@nestjs/schematics": "^6.8.1",
     "@nestjs/testing": "^6.10.14",
@@ -53,7 +54,6 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.0",
     "tsconfig-paths": "^3.9.0",
-    "typedoc": "^0.16.11",
     "typescript": "^3.7.4"
   },
   "jest": {

@@ -35,6 +35,7 @@ lerna-debug.log*
 
 /@types
 /docs
+/documentation
 
 .dockerignore
 Dockerfile

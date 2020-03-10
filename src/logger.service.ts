@@ -83,8 +83,8 @@ export class AppLogger extends Logger {
 
     /**
      * @param  {string} message
-     * @param  {string} trace?
-     * @param  {string} hash? - Identifies the specific error 
+     * @param  {string} trace
+     * @param  {string} hash    Identifies the specific error 
      * @returns {void}
      */
     public error(message: string, trace?: string, hash?: string): void {
