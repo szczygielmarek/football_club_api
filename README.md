@@ -37,3 +37,11 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Documentation
+
+```bash
+# typedoc
+$ npm run docs
+```
+The code documentation will be built in the folder /docs
