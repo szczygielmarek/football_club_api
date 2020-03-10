@@ -40,8 +40,14 @@ $ npm run test:cov
 
 ## Documentation
 
+### OpenAPI (Swagger)
+While the application is running, open your browser and navigate to http://localhost:3000/api. You should see the Swagger UI.
+
+### TypeDoc
+
 ```bash
 # typedoc
 $ npm run docs
 ```
 The code documentation will be built in the folder /docs
+
