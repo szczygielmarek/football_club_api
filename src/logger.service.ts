@@ -5,13 +5,18 @@ import * as WinstonGraylog2 from 'winston-graylog2';
 // const Log2gelf = require('winston-log2gelf');
 import * as path from 'path';
 
+/**
+ * Logger that implements [`winston.Logger`](https://github.com/winstonjs/winston)
+ * 
+ * Uses multiple transports:
+ * - **Graylog** service for _production_ mode
+ * - **File** transport for _development_ mode
+ */
 @Injectable({ scope: Scope.TRANSIENT })
 export class AppLogger extends Logger {
 
     /**
-     * Winston Logger object
-     * 
-     * Documantation: https://github.com/winstonjs/winston
+     * `winston.Logger` object
      */
     private _logger: winston.Logger;
 
@@ -28,7 +33,7 @@ export class AppLogger extends Logger {
     }
 
     /**
-     * Set transports for winston logger
+     * Sets transports for `winston.Logger`
      * 
      * @returns {Transport[]}
      */
@@ -76,9 +81,14 @@ export class AppLogger extends Logger {
         super.log(message);
     }
 
-    /** @inheritdoc */
+    /**
+     * @param  {string} message
+     * @param  {string} trace?
+     * @param  {string} hash? - Identifies the specific error 
+     * @returns {void}
+     */
     public error(message: string, trace?: string, hash?: string): void {
-        const test = this._logger.log({
+        this._logger.log({
             level: 'error',
             message: message,
             trace: trace,
