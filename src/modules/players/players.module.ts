@@ -1,7 +1,7 @@
 // Core
 import { Module } from "@nestjs/common";
 // Modules
-import { LoggerModule } from "src/logger.module";
+import { LoggerModule } from "src/core/log/logger.module";
 // Controllers
 import { PlayersController } from "./controllers/players.controller";
 // Services

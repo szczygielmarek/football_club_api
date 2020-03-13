@@ -3,7 +3,7 @@ import { Injectable } from "@nestjs/common";
 // Types
 import { ID } from "src/types";
 // Services
-import { AppLogger } from "src/logger.service";
+import { AppLogger } from "src/core/log/logger.service";
 // Models
 import { Player } from "../models/player.model";
 import { CreatePlayerDto } from "../dtos/create-player.dto";

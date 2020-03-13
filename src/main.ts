@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 // Services
-import { AppLogger } from './logger.service';
+import { AppLogger } from './core/log/logger.service';
 
 
 async function bootstrap() {
