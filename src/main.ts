@@ -1,15 +1,26 @@
+// Core
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+// Modules
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+// Services
 import { AppLogger } from './logger.service';
+
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: false,
     });
-    
+
     // Logger
     app.useLogger(new AppLogger());
+
+    // Validation
+    app.useGlobalPipes(new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+    }));
 
     // Swagger
     const options = new DocumentBuilder()
@@ -21,6 +32,9 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('api', app, document);
 
+    // Watcher
     await app.listen(3000);
+
 }
+
 bootstrap();
