@@ -11,7 +11,7 @@ export const createDatabaseProvider = (options: ConnectionConfig): Provider => {
         provide: DATABASE_CONNECTION,
         useFactory: async (): Promise<DatabaseConnection> => {
             const connection: DatabaseConnection = await createConnection(options);
-            await connection.connect();
+            await connection.connect((err) => err && console.error(err));
 
             connection.asyncQuery = (sql: string, values?: any): Promise<any> => {
                 return new Promise((resolve, reject) => {
