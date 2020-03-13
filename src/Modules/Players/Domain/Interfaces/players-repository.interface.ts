@@ -1,6 +1,6 @@
-// TYPES
+// Types
 import { ID } from "src/types";
-// MODELS
+// Models
 import { Player } from "../Models/player.model";
 import { CreatePlayerDto } from "../DTOs/create-player.dto";
 import { UpdatePlayerDto } from "../DTOs/update-player.dto";

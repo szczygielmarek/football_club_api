@@ -1,8 +1,8 @@
-// VALIDATION
+// Validation
 import { IsInt, IsString, IsDate, IsEnum } from 'class-validator';
-// TYPES
+// Types
 import { ID, URL } from "src/types";
-// ENUMS
+// Enums
 import { Foot } from "src/Shared/Enums";
 
 

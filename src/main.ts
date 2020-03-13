@@ -1,10 +1,10 @@
-// CORE
+// Core
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-// MODULES
 import { ValidationPipe } from '@nestjs/common';
+// Modules
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-// SERVICES
+// Services
 import { AppLogger } from './logger.service';
 
 

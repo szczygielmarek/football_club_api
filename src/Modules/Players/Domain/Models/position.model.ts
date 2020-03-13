@@ -1,6 +1,6 @@
-// TYPES
+// Types
 import { ID } from "src/types";
-// ENUMS
+// Enums
 import { PositionArea } from "src/Shared/Enums";
 
 

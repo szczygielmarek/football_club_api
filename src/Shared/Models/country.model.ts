@@ -1,4 +1,4 @@
-// TYPES
+// Types
 import { ID, URL } from '../../types';
 
 

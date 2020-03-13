@@ -1,12 +1,12 @@
-// CORE
+// Core
 import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch } from "@nestjs/common";
-// SWAGGER
+// Docs
 import { ApiResponse } from "@nestjs/swagger";
-// TYPES
+// Types
 import { ID } from "src/types";
-// SERVICES
+// Services
 import { PlayersService } from "../../Domain/Services/players.service";
-// MODELS
+// Models
 import { Player } from "../../Domain/Models/player.model";
 import { CreatePlayerDto } from "../../Domain/DTOs/create-player.dto";
 import { UpdatePlayerDto } from "../../Domain/DTOs/update-player.dto";
@@ -18,9 +18,7 @@ import { UpdatePlayerDto } from "../../Domain/DTOs/update-player.dto";
 @Controller('players')
 export class PlayersController {
 
-    constructor(
-        private readonly playersService: PlayersService
-    ) { }
+    constructor(private readonly playersService: PlayersService) { }
 
     /**
      * Gets players list filtered by given parameters
@@ -44,9 +42,7 @@ export class PlayersController {
     }
 
     @Get(':id')
-    async getOne(
-        @Param('id') id: ID
-    ): Promise<Player> {
+    async getOne(@Param('id') id: ID): Promise<Player> {
         try {
             return await this.playersService.getPlayer(id);
         } catch {
@@ -56,9 +52,7 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Post()
-    async create(
-        @Body() player: CreatePlayerDto
-    ): Promise<Player> {
+    async create(@Body() player: CreatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.create(player);
         } catch {
@@ -68,10 +62,7 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Patch(':id')
-    async update(
-        @Param('id') id: number,
-        @Body() player: UpdatePlayerDto
-    ): Promise<Player> {
+    async update(@Param('id') id: number, @Body() player: UpdatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.update(id, player);
         } catch {
@@ -81,9 +72,7 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Delete(':id')
-    async delete(
-        @Param('id') id: number
-    ): Promise<ID> {
+    async delete(@Param('id') id: number): Promise<ID> {
         try {
             await this.playersService.delete(id);
             return id;

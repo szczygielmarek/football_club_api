@@ -1,10 +1,10 @@
-// VALIDATION
+// Validation
 import { IsInt, IsString, IsDate, IsInstance, IsEnum } from 'class-validator';
-// TYPES
+// Types
 import { URL } from "src/types";
-// ENUMS
+// Enums
 import { Foot } from "src/Shared/Enums";
-// MODELS
+// Models
 import { City } from 'src/Shared/Models/city.model';
 import { Country } from 'src/Shared/Models/country.model';
 import { Position } from '../Models/position.model';

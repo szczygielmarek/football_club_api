@@ -1,10 +1,10 @@
-// CORE
+// Core
 import { Module } from "@nestjs/common";
-// MODULES
+// Modules
 import { LoggerModule } from "src/logger.module";
-// CONTROLLERS
+// Controllers
 import { PlayersController } from "./Application/Controllers/players.controller";
-// SERVICES
+// Services
 import { PlayersService } from "./Domain/Services/players.service";
 
 

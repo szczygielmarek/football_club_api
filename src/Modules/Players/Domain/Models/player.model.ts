@@ -1,8 +1,8 @@
-// TYPES
+// Types
 import { ID, URL } from "src/types";
-// ENUMS
+// Enums
 import { Foot } from "src/Shared/Enums";
-// MODELS
+// Models
 import { City } from "src/Shared/Models/city.model";
 import { Country } from "src/Shared/Models/country.model";
 

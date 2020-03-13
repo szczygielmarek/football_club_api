@@ -1,10 +1,10 @@
-// CORE
+// Core
 import { Injectable } from "@nestjs/common";
-// TYPES
+// Types
 import { ID } from "src/types";
-// SERVICES
+// Services
 import { AppLogger } from "src/logger.service";
-// MODELS
+// Models
 import { Player } from "../Models/player.model";
 import { CreatePlayerDto } from "../DTOs/create-player.dto";
 import { UpdatePlayerDto } from "../DTOs/update-player.dto";
@@ -13,9 +13,7 @@ import { UpdatePlayerDto } from "../DTOs/update-player.dto";
 @Injectable()
 export class PlayersService {
 
-    constructor(
-        private readonly logger: AppLogger
-    ) {
+    constructor(private readonly logger: AppLogger) {
         this.logger.setContext('PlayersService');
     }
 

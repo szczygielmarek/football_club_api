@@ -1,6 +1,6 @@
-// TYPES
+// Types
 import { ID } from '../../types';
-// MODELS
+// Models
 import { Country } from './country.model';
 
 
