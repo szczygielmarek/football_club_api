@@ -8,7 +8,7 @@ import { PositionArea } from "src/Shared/Enums";
  * Position on the pitch and its details
  */
 export class Position {
-    
+
     /**
      * @prop {ID} id
      */
