@@ -3,9 +3,9 @@ import { Module } from "@nestjs/common";
 // Modules
 import { LoggerModule } from "src/logger.module";
 // Controllers
-import { PlayersController } from "./Application/Controllers/players.controller";
+import { PlayersController } from "./controllers/players.controller";
 // Services
-import { PlayersService } from "./Domain/Services/players.service";
+import { PlayersService } from "./services/players.service";
 
 
 @Module({

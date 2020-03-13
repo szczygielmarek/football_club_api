@@ -5,9 +5,9 @@ import { ID } from "src/types";
 // Services
 import { AppLogger } from "src/logger.service";
 // Models
-import { Player } from "../Models/player.model";
-import { CreatePlayerDto } from "../DTOs/create-player.dto";
-import { UpdatePlayerDto } from "../DTOs/update-player.dto";
+import { Player } from "../models/player.model";
+import { CreatePlayerDto } from "../dtos/create-player.dto";
+import { UpdatePlayerDto } from "../dtos/update-player.dto";
 
 
 @Injectable()
@@ -25,7 +25,7 @@ export class PlayersService {
 
     async getPlayer(id: ID): Promise<Player> {
         this.logger.log(`getPlayer(id: ${id})`);
-        // return await this.playersRepository.getPlayer(id);
+        // return await this.playersRepository.getOne(id);
         return null;
     }
 

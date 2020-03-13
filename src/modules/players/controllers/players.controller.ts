@@ -1,15 +1,15 @@
 // Core
-import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe } from "@nestjs/common";
 // Docs
 import { ApiResponse } from "@nestjs/swagger";
 // Types
 import { ID } from "src/types";
 // Services
-import { PlayersService } from "../../Domain/Services/players.service";
+import { PlayersService } from "../services/players.service";
 // Models
-import { Player } from "../../Domain/Models/player.model";
-import { CreatePlayerDto } from "../../Domain/DTOs/create-player.dto";
-import { UpdatePlayerDto } from "../../Domain/DTOs/update-player.dto";
+import { Player } from "../models/player.model";
+import { CreatePlayerDto } from "../dtos/create-player.dto";
+import { UpdatePlayerDto } from "../dtos/update-player.dto";
 
 
 /**
@@ -41,8 +41,9 @@ export class PlayersController {
         }
     }
 
+    @ApiResponse({ status: 200, description: 'Get Player by ID.' })
     @Get(':id')
-    async getOne(@Param('id') id: ID): Promise<Player> {
+    async getOne(@Param('id', new ParseIntPipe()) id: ID): Promise<Player> {
         try {
             return await this.playersService.getPlayer(id);
         } catch {
@@ -62,7 +63,7 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Patch(':id')
-    async update(@Param('id') id: number, @Body() player: UpdatePlayerDto): Promise<Player> {
+    async update(@Param('id', new ParseIntPipe()) id: number, @Body() player: UpdatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.update(id, player);
         } catch {
@@ -72,7 +73,7 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Delete(':id')
-    async delete(@Param('id') id: number): Promise<ID> {
+    async delete(@Param('id', new ParseIntPipe()) id: number): Promise<ID> {
         try {
             await this.playersService.delete(id);
             return id;

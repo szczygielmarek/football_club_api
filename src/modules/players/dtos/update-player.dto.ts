@@ -3,11 +3,11 @@ import { IsInt, IsString, IsDate, IsInstance, IsEnum } from 'class-validator';
 // Types
 import { URL } from "src/types";
 // Enums
-import { Foot } from "src/Shared/Enums";
+import { Foot } from "src/shared/enums";
 // Models
-import { City } from 'src/Shared/Models/city.model';
-import { Country } from 'src/Shared/Models/country.model';
-import { Position } from '../Models/position.model';
+import { City } from 'src/shared/models/city.model';
+import { Country } from 'src/shared/models/country.model';
+import { Position } from '../models/position.model';
 
 
 export class UpdatePlayerDto {

@@ -1,7 +1,7 @@
 // Types
 import { ID } from "src/types";
 // Enums
-import { PositionArea } from "src/Shared/Enums";
+import { PositionArea } from "src/shared/enums";
 
 
 /**

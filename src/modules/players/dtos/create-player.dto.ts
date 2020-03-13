@@ -3,7 +3,7 @@ import { IsInt, IsString, IsDate, IsEnum } from 'class-validator';
 // Types
 import { ID, URL } from "src/types";
 // Enums
-import { Foot } from "src/Shared/Enums";
+import { Foot } from "src/shared/enums";
 
 
 export class CreatePlayerDto {

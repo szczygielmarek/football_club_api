@@ -1,9 +1,9 @@
 // Types
 import { ID } from "src/types";
 // Models
-import { Player } from "../Models/player.model";
-import { CreatePlayerDto } from "../DTOs/create-player.dto";
-import { UpdatePlayerDto } from "../DTOs/update-player.dto";
+import { Player } from "../models/player.model";
+import { CreatePlayerDto } from "../dtos/create-player.dto";
+import { UpdatePlayerDto } from "../dtos/update-player.dto";
 
 
 /**
@@ -27,7 +27,7 @@ export interface PlayersRepositoryInterface {
      * @param  {ID} id
      * @returns {Player}
      */
-    getPlayer: (id: ID) => Promise<Player>;
+    getOne: (id: ID) => Promise<Player>;
 
     /**
      * Creates new player

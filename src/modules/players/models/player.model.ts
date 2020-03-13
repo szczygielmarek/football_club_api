@@ -1,10 +1,10 @@
 // Types
 import { ID, URL } from "src/types";
 // Enums
-import { Foot } from "src/Shared/Enums";
+import { Foot } from "src/shared/enums";
 // Models
-import { City } from "src/Shared/Models/city.model";
-import { Country } from "src/Shared/Models/country.model";
+import { City } from "src/shared/models/city.model";
+import { Country } from "src/shared/models/country.model";
 
 
 /**
