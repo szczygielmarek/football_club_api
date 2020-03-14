@@ -3,48 +3,47 @@ import { Injectable } from "@nestjs/common";
 // Types
 import { ID } from "src/types";
 // Services
-import { AppLogger } from "src/core/log/logger.service";
+import { PlayersRepository } from "../repositories/players.repository";
 // Models
 import { Player } from "../models/player.model";
 import { CreatePlayerDto } from "../dtos/create-player.dto";
 import { UpdatePlayerDto } from "../dtos/update-player.dto";
 
 
+/**
+ * CRUD services for Players
+ */
 @Injectable()
 export class PlayersService {
 
-    constructor(private readonly logger: AppLogger) {
-        this.logger.setContext('PlayersService');
-    }
+    constructor(private readonly repository: PlayersRepository) { }
 
     async getList(limit?: number, page?: number, search?: string): Promise<Player[]> {
-        this.logger.log(`getList(page: ${page}, limit: ${limit} search: ${search})`);
-        // return await this.playersRepository.getList();
-        return [];
+
+        // set default limit when page is declared but limit not
+        if (page && typeof limit === 'undefined') {
+            limit = 10; // TODO: from parameters
+        }
+
+        return await this.repository.getList(limit, page, search);
     }
 
-    async getPlayer(id: ID): Promise<Player> {
-        this.logger.log(`getPlayer(id: ${id})`);
-        // return await this.playersRepository.getOne(id);
-        return null;
+    async getOne(id: ID): Promise<Player> {
+        return await this.repository.getOne(id);
     }
 
     async create(player: CreatePlayerDto): Promise<Player> {
-        this.logger.log(`create(player: ${player})`);
-        // return await this.playerRepository.create(player);
-        return null;
+        // TODO: format date (tutaj albo w repo)
+        // const { date_of_birth, debut } = player;
+        return this.repository.create(player);
     }
 
     async update(id: ID, player: UpdatePlayerDto): Promise<Player> {
-        this.logger.log(`update(id: ${id}, player: ${player})`);
-        // return await this.playerRepository.update(id, player);
-        return null;
+        return this.repository.update(id, player);
     }
 
     async delete(id: ID): Promise<ID> {
-        this.logger.log(`delete(id: ${id})`);
-        // return await this.playerRepository.delete(id);
-        return id;
+        return this.repository.delete(id);
     }
 
 }

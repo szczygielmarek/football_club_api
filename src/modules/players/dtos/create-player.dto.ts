@@ -1,5 +1,5 @@
 // Validation
-import { IsInt, IsString, IsDate, IsEnum } from 'class-validator';
+import { IsInt, IsString, IsDate, IsEnum, IsOptional } from 'class-validator';
 // Types
 import { ID, URL } from "src/types";
 // Enums
@@ -14,39 +14,50 @@ export class CreatePlayerDto {
     @IsString()
     readonly surname: string;
 
-    @IsDate()
-    readonly date_of_birth: Date;
+    @IsString()
+    readonly date_of_birth: string;
 
+    @IsOptional()
     @IsInt()
     readonly country_id?: ID;
 
+    @IsOptional()
     @IsInt()
     readonly citizenship_id?: ID;
 
+    @IsOptional()
     @IsInt()
     readonly place_of_birth_id?: ID;
 
+    @IsOptional()
     @IsInt()
     readonly position_id?: ID;
 
-    @IsDate()
-    readonly debut?: Date;
+    @IsOptional()
+    @IsString()
+    readonly debut?: string;
 
+    @IsOptional()
     @IsString()
     readonly description?: string;
 
+    @IsOptional()
     @IsString()
     readonly profile_image?: URL;
 
+    @IsOptional()
     @IsString()
     readonly cover_image?: URL;
 
+    @IsOptional()
     @IsEnum(Foot)
     readonly foot?: Foot;
 
+    @IsOptional()
     @IsInt()
     readonly height?: number;
 
+    @IsOptional()
     @IsInt()
     readonly weight?: number;
 

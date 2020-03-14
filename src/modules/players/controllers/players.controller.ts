@@ -27,10 +27,10 @@ export class PlayersController {
      * @param {number} limit    How many entries should by fetched
      * @param {string} search   Searched phrase
      */
-    @ApiResponse({ status: 200, description: 'List Players.' })
     @Get()
+    @ApiResponse({ status: 200, description: 'List players.' })
     async getList(
-        @Query('limit') limit: number = 10,
+        @Query('limit') limit: number,
         @Query('page') page: number,
         @Query('search') search: string,
     ): Promise<Player[]> {
@@ -41,11 +41,11 @@ export class PlayersController {
         }
     }
 
-    @ApiResponse({ status: 200, description: 'Get Player by ID.' })
     @Get(':id')
+    @ApiResponse({ status: 200, description: 'Get player by ID.' })
     async getOne(@Param('id', new ParseIntPipe()) id: ID): Promise<Player> {
         try {
-            return await this.playersService.getPlayer(id);
+            return await this.playersService.getOne(id);
         } catch {
             throw new NotFoundException('Nie znaleziono wpisu o podanym id');
         }
@@ -53,6 +53,7 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Post()
+    @ApiResponse({ status: 201, description: 'Create new player.' })
     async create(@Body() player: CreatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.create(player);
@@ -63,7 +64,8 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Patch(':id')
-    async update(@Param('id', new ParseIntPipe()) id: number, @Body() player: UpdatePlayerDto): Promise<Player> {
+    @ApiResponse({ status: 200, description: 'Update player data.' })
+    async update(@Param('id', new ParseIntPipe()) id: ID, @Body() player: UpdatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.update(id, player);
         } catch {
@@ -73,7 +75,8 @@ export class PlayersController {
 
     // @UseGuards(AuthGuard)
     @Delete(':id')
-    async delete(@Param('id', new ParseIntPipe()) id: number): Promise<ID> {
+    @ApiResponse({ status: 200, description: 'Delete player.' })
+    async delete(@Param('id', new ParseIntPipe()) id: ID): Promise<ID> {
         try {
             await this.playersService.delete(id);
             return id;
