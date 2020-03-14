@@ -18,3 +18,13 @@ export const nestColumnsFrom = (rows: any[], columns: string[]): any[] => {
         }
     });
 }
+
+/**
+ * Converts JavaScript Date string to SQL Date type string 
+ * 
+ * @param  {string} date    JavaScript Date string
+ * @returns string          SQL Date type
+ */
+export const convertToSQLDate = (date: string): string => {
+    return new Date(date).toISOString().slice(0, 10);
+}

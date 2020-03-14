@@ -37,8 +37,6 @@ export class PlayersService {
     }
 
     async create(player: CreatePlayerDto): Promise<Player> {
-        // TODO: format date (tutaj albo w repo)
-        // const { date_of_birth, debut } = player;
         return this.repository.create(player);
     }
 

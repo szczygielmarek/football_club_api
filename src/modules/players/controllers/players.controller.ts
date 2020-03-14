@@ -1,9 +1,11 @@
 // Core
-import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe, UsePipes } from "@nestjs/common";
 // Docs
 import { ApiResponse } from "@nestjs/swagger";
 // Types
 import { ID } from "src/types";
+// Pipes
+import { ConvertDatePipe } from "src/shared/pipes/convert-date.pipe";
 // Services
 import { PlayersService } from "../services/players.service";
 // Models
@@ -54,6 +56,7 @@ export class PlayersController {
     // @UseGuards(AuthGuard)
     @Post()
     @ApiResponse({ status: 201, description: 'Create new player.' })
+    @UsePipes(new ConvertDatePipe(['date_of_birth', 'debut']))
     async create(@Body() player: CreatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.create(player);
@@ -65,6 +68,7 @@ export class PlayersController {
     // @UseGuards(AuthGuard)
     @Patch(':id')
     @ApiResponse({ status: 200, description: 'Update player data.' })
+    @UsePipes(new ConvertDatePipe(['date_of_birth', 'debut']))
     async update(@Param('id', new ParseIntPipe()) id: ID, @Body() player: UpdatePlayerDto): Promise<Player> {
         try {
             return await this.playersService.update(id, player);
