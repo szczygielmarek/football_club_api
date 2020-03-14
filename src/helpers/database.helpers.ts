@@ -20,7 +20,7 @@ export const nestColumnsFrom = (rows: any[], columns: string[]): any[] => {
 }
 
 /**
- * Converts JavaScript Date string to SQL Date type string 
+ * Converts JavaScript date value in ISO format to SQL Date format
  * 
  * @param  {string} date    JavaScript Date string
  * @returns string          SQL Date type

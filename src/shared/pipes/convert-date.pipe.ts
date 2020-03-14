@@ -3,7 +3,7 @@ import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from
 import { convertToSQLDate } from 'src/helpers/database.helpers';
 
 /**
- * Converts JavaScript Date to SQL Date format 
+ * Converts JavaScript date value in ISO format to SQL Date format
  */
 @Injectable()
 export class ConvertDatePipe implements PipeTransform<object, object> {
@@ -18,7 +18,7 @@ export class ConvertDatePipe implements PipeTransform<object, object> {
 
         for (let prop of this.columns) {
             if(!(prop in data)) 
-                throw new BadRequestException('Column with the given name does not exist'); 
+                continue;
 
             try {
                 data[prop] = convertToSQLDate(data[prop]);

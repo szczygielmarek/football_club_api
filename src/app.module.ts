@@ -1,10 +1,11 @@
 // Core
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 // Config
 import globalParams from './config/global.parameters';
 // Modules
+import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './core/database';
+import { MulterModule } from '@nestjs/platform-express';
 import { LoggerModule } from './core/log/logger.module';
 import { PlayersModule } from './modules/players/players.module';
 // Controlers
@@ -24,6 +25,9 @@ import { AppController } from './app.controller';
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
             port: Number(process.env.DB_PORT) || 3306,
+        }),
+        MulterModule.register({
+            limits: { fileSize: 2097152 }
         }),
         LoggerModule,
         PlayersModule,

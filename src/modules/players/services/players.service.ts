@@ -1,7 +1,7 @@
 // Core
 import { Injectable } from "@nestjs/common";
 // Types
-import { ID } from "src/types";
+import { ID, Files } from "src/types";
 // Services
 import { ConfigService } from "@nestjs/config";
 import { PlayersRepository } from "../repositories/players.repository";
@@ -36,11 +36,27 @@ export class PlayersService {
         return await this.repository.getOne(id);
     }
 
-    async create(player: CreatePlayerDto): Promise<Player> {
+    async create(player: CreatePlayerDto, files: Files): Promise<Player> {
+
+        // put storage filenames to player object
+        for (const property in files) {
+            const fieldname = files[property][0].fieldname;
+            const filename = files[property][0].filename;
+            player[fieldname] = filename;
+        }
+
         return this.repository.create(player);
     }
 
-    async update(id: ID, player: UpdatePlayerDto): Promise<Player> {
+    async update(id: ID, player: UpdatePlayerDto, files: Files): Promise<Player> {
+
+        // put storage filenames to player object
+        for (const property in files) {
+            const fieldname = files[property][0].fieldname;
+            const filename = files[property][0].filename;
+            player[fieldname] = filename;
+        }
+
         return this.repository.update(id, player);
     }
 

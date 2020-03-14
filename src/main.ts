@@ -1,7 +1,3 @@
-// Config
-import { config } from 'dotenv';
-config();
-
 // Core
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
