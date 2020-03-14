@@ -3,6 +3,7 @@ import { Injectable } from "@nestjs/common";
 // Types
 import { ID } from "src/types";
 // Services
+import { ConfigService } from "@nestjs/config";
 import { PlayersRepository } from "../repositories/players.repository";
 // Models
 import { Player } from "../models/player.model";
@@ -16,13 +17,16 @@ import { UpdatePlayerDto } from "../dtos/update-player.dto";
 @Injectable()
 export class PlayersService {
 
-    constructor(private readonly repository: PlayersRepository) { }
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly repository: PlayersRepository
+    ) { }
 
     async getList(limit?: number, page?: number, search?: string): Promise<Player[]> {
 
         // set default limit when page is declared but limit not
         if (page && typeof limit === 'undefined') {
-            limit = 10; // TODO: from parameters
+            limit = this.configService.get<number>('pagination.limit', 10);
         }
 
         return await this.repository.getList(limit, page, search);
