@@ -1,24 +1,31 @@
 // Core
-import { Module, DynamicModule, Global } from '@nestjs/common';
+import { DynamicModule, Global } from '@nestjs/common';
 import { ConnectionConfig } from 'mysql';
 // Providers
-import { createDatabaseProvider } from './';
+import { createDatabaseConnectionProvider } from './providers/database.provider';
 
 
 /**
- * The @Global() decorator makes the module global-scoped. 
+ * The **@Global()** decorator makes the module global-scoped. 
  * Global modules should be registered only once, generally by the root or core module. 
+ * 
+ * **register** static methood requires 
+ * [`ConnectionConfig`](https://www.npmjs.com/package/mysql#connection-options) 
+ * options to create mysql connection.
+ * 
+ * Module exports provider with token **"DATABASE_CONNECTION"**.
  */
 @Global()
-@Module({})
 export class DatabaseModule {
 
-    static forRoot(options: ConnectionConfig): DynamicModule {
-        const provider = createDatabaseProvider(options);
+    static register(options: ConnectionConfig): DynamicModule {
+        
+        const connectionProvider = createDatabaseConnectionProvider(options);
+
         return {
             module: DatabaseModule,
-            providers: [provider],
-            exports: [provider],
+            providers: [connectionProvider],
+            exports: [connectionProvider],
         }
     }
 

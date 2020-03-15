@@ -1,0 +1,2 @@
+export const STORAGE_OPTIONS = 'STORAGE_OPTIONS';
+export const STORAGE_ENGINE = 'STORAGE_ENGINE';

@@ -4,7 +4,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 // Docs
 import { ApiResponse } from "@nestjs/swagger";
 // Types
-import { ID, Files } from "src/types";
+import { ID, FilesMetadata } from "src/types";
 // Pipes
 import { ConvertDatePipe } from "src/shared/pipes/convert-date.pipe";
 // Services
@@ -13,17 +13,13 @@ import { PlayersService } from "../services/players.service";
 import { Player } from "../models/player.model";
 import { CreatePlayerDto } from "../dtos/create-player.dto";
 import { UpdatePlayerDto } from "../dtos/update-player.dto";
-// StorageEngine
-import { storageEngine } from "src/core/storage/storageEngine";
 
 
 /**
  * Composes multiple decorators for create and update request handlers
  * 
- * - Transforms data
- * - Saves uploaded files
- * 
- * **Note** Function uses StorageEngine to save uploaded files
+ * - **Pipe**: Transforms fields from JavaScript Date ISO format to SQL Date format
+ * - **Interceptor:** Extracts file fields from req.body object
  */
 function TransformData(): MethodDecorator {
     return applyDecorators(
@@ -34,7 +30,7 @@ function TransformData(): MethodDecorator {
             FileFieldsInterceptor([
                 { name: 'profile_image', maxCount: 1 },
                 { name: 'cover_image', maxCount: 1 },
-            ], { storage: storageEngine('players', ['name', 'surname']) })
+            ])
         )
     );
 }
@@ -91,7 +87,7 @@ export class PlayersController {
     @TransformData()
     async create(
         @Body() player: CreatePlayerDto,
-        @UploadedFiles() files: Files,
+        @UploadedFiles() files: FilesMetadata,
     ): Promise<Player> {
 
         try {
@@ -109,7 +105,7 @@ export class PlayersController {
     async update(
         @Param('id', new ParseIntPipe()) id: ID,
         @Body() player: UpdatePlayerDto,
-        @UploadedFiles() files: Files,
+        @UploadedFiles() files: FilesMetadata,
     ): Promise<Player> {
 
         try {
