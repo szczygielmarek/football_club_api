@@ -1,15 +1,39 @@
 // Core
-import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe, applyDecorators, UsePipes, UseInterceptors, UploadedFiles } from "@nestjs/common";
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 // Docs
 import { ApiResponse } from "@nestjs/swagger";
 // Types
-import { ID } from "src/types";
+import { ID, FilesMetadata } from "src/types";
+// Pipes
+import { ConvertDatePipe } from "src/shared/pipes/convert-date.pipe";
 // Services
 import { PlayersService } from "../services/players.service";
 // Models
 import { Player } from "../models/player.model";
 import { CreatePlayerDto } from "../dtos/create-player.dto";
 import { UpdatePlayerDto } from "../dtos/update-player.dto";
+
+
+/**
+ * Composes multiple decorators for create and update request handlers
+ * 
+ * - **Pipe**: Transforms fields from JavaScript Date ISO format to SQL Date format
+ * - **Interceptor:** Extracts file fields from req.body object
+ */
+function TransformData(): MethodDecorator {
+    return applyDecorators(
+        UsePipes(
+            new ConvertDatePipe(['date_of_birth', 'debut'])
+        ),
+        UseInterceptors(
+            FileFieldsInterceptor([
+                { name: 'profile_image', maxCount: 1 },
+                { name: 'cover_image', maxCount: 1 },
+            ])
+        )
+    );
+}
 
 
 /**
@@ -27,59 +51,85 @@ export class PlayersController {
      * @param {number} limit    How many entries should by fetched
      * @param {string} search   Searched phrase
      */
-    @ApiResponse({ status: 200, description: 'List Players.' })
     @Get()
+    @ApiResponse({ status: 200, description: 'List players.' })
     async getList(
-        @Query('limit') limit: number = 10,
+        @Query('limit') limit: number,
         @Query('page') page: number,
         @Query('search') search: string,
     ): Promise<Player[]> {
+
         try {
             return await this.playersService.getList(limit, page, search);
         } catch {
             throw new NotFoundException('Nie znaleziono żadnych wpisów');
         }
+
     }
 
-    @ApiResponse({ status: 200, description: 'Get Player by ID.' })
     @Get(':id')
-    async getOne(@Param('id', new ParseIntPipe()) id: ID): Promise<Player> {
+    @ApiResponse({ status: 200, description: 'Get player by ID.' })
+    async getOne(
+        @Param('id', new ParseIntPipe()) id: ID
+    ): Promise<Player> {
+
         try {
-            return await this.playersService.getPlayer(id);
+            return await this.playersService.getOne(id);
         } catch {
             throw new NotFoundException('Nie znaleziono wpisu o podanym id');
         }
+
     }
 
     // @UseGuards(AuthGuard)
     @Post()
-    async create(@Body() player: CreatePlayerDto): Promise<Player> {
+    @ApiResponse({ status: 201, description: 'Create new player.' })
+    @TransformData()
+    async create(
+        @Body() player: CreatePlayerDto,
+        @UploadedFiles() files: FilesMetadata,
+    ): Promise<Player> {
+
         try {
-            return await this.playersService.create(player);
+            return await this.playersService.create(player, files);
         } catch {
             throw new HttpException('Nie udało się utworzyć wpisu', HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
     // @UseGuards(AuthGuard)
     @Patch(':id')
-    async update(@Param('id', new ParseIntPipe()) id: number, @Body() player: UpdatePlayerDto): Promise<Player> {
+    @ApiResponse({ status: 200, description: 'Update player data.' })
+    @TransformData()
+    async update(
+        @Param('id', new ParseIntPipe()) id: ID,
+        @Body() player: UpdatePlayerDto,
+        @UploadedFiles() files: FilesMetadata,
+    ): Promise<Player> {
+
         try {
-            return await this.playersService.update(id, player);
+            return await this.playersService.update(id, player, files);
         } catch {
             throw new HttpException('Nie udało się zaktualizować danych', HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
     // @UseGuards(AuthGuard)
     @Delete(':id')
-    async delete(@Param('id', new ParseIntPipe()) id: number): Promise<ID> {
+    @ApiResponse({ status: 200, description: 'Delete player.' })
+    async delete(
+        @Param('id', new ParseIntPipe()) id: ID
+    ): Promise<ID> {
+
         try {
             await this.playersService.delete(id);
             return id;
         } catch {
             throw new HttpException('Nie udało się usunąć wpisu', HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
 }

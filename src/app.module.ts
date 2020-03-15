@@ -1,8 +1,10 @@
 // Core
 import { Module } from '@nestjs/common';
+// Config
+import globalParams from './config/global.parameters';
 // Modules
-import { DatabaseModule } from './core/database';
-import { LoggerModule } from './core/log/logger.module';
+import { ConfigModule } from '@nestjs/config';
+import { CoreModule } from './core/core.module';
 import { PlayersModule } from './modules/players/players.module';
 // Controlers
 import { AppController } from './app.controller';
@@ -10,14 +12,12 @@ import { AppController } from './app.controller';
 
 @Module({
     imports: [
-        DatabaseModule.forRoot({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_DATABASE,
-            port: Number(process.env.DB_DATABASE) || 3306,
+        ConfigModule.forRoot({
+            isGlobal: true,
+            ignoreEnvFile: true,
+            load: [globalParams],
         }),
-        LoggerModule,
+        CoreModule,
         PlayersModule,
     ],
     controllers: [AppController],

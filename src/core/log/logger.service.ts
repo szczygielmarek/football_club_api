@@ -2,7 +2,6 @@ import { Injectable, Scope, Logger } from '@nestjs/common';
 import * as winston from 'winston';
 import * as Transport from 'winston-transport';
 import * as WinstonGraylog2 from 'winston-graylog2';
-// const Log2gelf = require('winston-log2gelf');
 import * as path from 'path';
 
 /**
@@ -13,7 +12,7 @@ import * as path from 'path';
  * - **File** transport for _development_ mode
  */
 @Injectable({ scope: Scope.TRANSIENT })
-export class AppLogger extends Logger {
+export class LoggerService extends Logger {
 
     /**
      * `winston.Logger` object
@@ -46,7 +45,10 @@ export class AppLogger extends Logger {
                 silent: false,
                 handleExceptions: true,
                 graylog: {
-                    servers: [{ host: 'localhost', port: 12201 }],
+                    servers: [{ 
+                        host: process.env.GRAYLOG_HOST || "localhost", 
+                        port: Number(process.env.GRAYLOG_PORT) || 12201 
+                    }],
                     bufferSize: 262144
                 },
                 staticMeta: {
@@ -59,7 +61,7 @@ export class AppLogger extends Logger {
 
             transports.push(
                 new winston.transports.File({
-                    dirname: path.join(__dirname, './../log/error/'),
+                    dirname: path.join(__dirname, './../../../log/error/'),
                     filename: 'error.log',
                     level: 'error',
                     handleExceptions: true,

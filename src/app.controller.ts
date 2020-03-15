@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, Res } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -8,4 +8,16 @@ export class AppController {
     getHello(): string {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
+
+    // TODO: fix static files
+    @Get('files/:fileName')
+    getFiles(@Param('fileName') fileName: string, @Res() res: any): any {
+        return res.sendFile(fileName, { root: 'uploads' });
+    }
+
+    @Get('files/players/:fileName')
+    getPlayerFiles(@Param('fileName') fileName: string, @Res() res: any): any {
+        return res.sendFile(fileName, { root: 'uploads/players' });
+    }
+
 }

@@ -1,3 +1,7 @@
+// ENV config
+import { config } from 'dotenv';
+config();
+
 // Core
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
@@ -5,7 +9,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 // Services
-import { AppLogger } from './core/log/logger.service';
+import { LoggerService } from './core/log/logger.service';
 
 
 async function bootstrap() {
@@ -14,7 +18,7 @@ async function bootstrap() {
     });
 
     // Logger
-    app.useLogger(new AppLogger());
+    app.useLogger(new LoggerService());
 
     // Validation
     app.useGlobalPipes(new ValidationPipe({

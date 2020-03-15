@@ -19,7 +19,7 @@ export interface PlayersRepositoryInterface {
      * @param {string} search   Searched phrase
      * @returns {Players[]}     Players array
      */
-    getList: (limit?: number, page?: number, search?: number) => Promise<Player[]>;
+    getList: (limit?: number, page?: number, search?: string) => Promise<Player[]>;
 
     /**
      * Gets player by ID
@@ -36,7 +36,7 @@ export interface PlayersRepositoryInterface {
      * @param  {CreatePlayerDto} player
      * @returns {Player}
      */
-    create: (id: ID, player: CreatePlayerDto) => Promise<Player>;
+    create: (player: CreatePlayerDto) => Promise<Player>;
 
     /**
      * Updates player

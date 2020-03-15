@@ -37,3 +37,6 @@ lerna-debug.log*
 Dockerfile
 
 .env
+
+/upload
+/uploads

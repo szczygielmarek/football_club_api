@@ -1,13 +1,17 @@
-import { Module } from '@nestjs/common';
-import { AppLogger } from './logger.service';
+import { Module, Global } from '@nestjs/common';
+import { LoggerService } from './logger.service';
 
 /**
- * Module that exports `AppLogger`
+ * Module that exports `LoggerService`
  * 
- * @exports [[AppLogger]]
+ * The @Global() decorator makes the module global-scoped. 
+ * Global modules should be registered only once, generally by the root or core module. 
+ * 
+ * @exports [[LoggerService]]
  */
+@Global()
 @Module({
-    providers: [AppLogger],
-    exports: [AppLogger],
+    providers: [LoggerService],
+    exports: [LoggerService],
 })
 export class LoggerModule { }
