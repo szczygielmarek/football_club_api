@@ -1,12 +1,10 @@
 // Core
-import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe, UsePipes, UseInterceptors, UploadedFiles } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Delete, Query, NotFoundException, HttpStatus, HttpException, Patch, ParseIntPipe, applyDecorators, UsePipes, UseInterceptors, UploadedFiles } from "@nestjs/common";
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 // Docs
 import { ApiResponse } from "@nestjs/swagger";
 // Types
 import { ID, Files } from "src/types";
-// Helpers
-import { storage } from "src/helpers/storage.helpers";
 // Pipes
 import { ConvertDatePipe } from "src/shared/pipes/convert-date.pipe";
 // Services
@@ -15,6 +13,31 @@ import { PlayersService } from "../services/players.service";
 import { Player } from "../models/player.model";
 import { CreatePlayerDto } from "../dtos/create-player.dto";
 import { UpdatePlayerDto } from "../dtos/update-player.dto";
+// StorageEngine
+import { storageEngine } from "src/core/storage/storageEngine";
+
+
+/**
+ * Composes multiple decorators for create and update request handlers
+ * 
+ * - Transforms data
+ * - Saves uploaded files
+ * 
+ * **Note** Function uses StorageEngine to save uploaded files
+ */
+function TransformData(): MethodDecorator {
+    return applyDecorators(
+        UsePipes(
+            new ConvertDatePipe(['date_of_birth', 'debut'])
+        ),
+        UseInterceptors(
+            FileFieldsInterceptor([
+                { name: 'profile_image', maxCount: 1 },
+                { name: 'cover_image', maxCount: 1 },
+            ], { storage: storageEngine('players', ['name', 'surname']) })
+        )
+    );
+}
 
 
 /**
@@ -50,8 +73,10 @@ export class PlayersController {
 
     @Get(':id')
     @ApiResponse({ status: 200, description: 'Get player by ID.' })
-    async getOne(@Param('id', new ParseIntPipe()) id: ID): Promise<Player> {
-        
+    async getOne(
+        @Param('id', new ParseIntPipe()) id: ID
+    ): Promise<Player> {
+
         try {
             return await this.playersService.getOne(id);
         } catch {
@@ -63,16 +88,12 @@ export class PlayersController {
     // @UseGuards(AuthGuard)
     @Post()
     @ApiResponse({ status: 201, description: 'Create new player.' })
-    @UsePipes(new ConvertDatePipe(['date_of_birth', 'debut']))
-    @UseInterceptors(FileFieldsInterceptor([
-        { name: 'profile_image', maxCount: 1 },
-        { name: 'cover_image', maxCount: 1 },
-    ], { storage: storage('players', ['name', 'surname']) }))
+    @TransformData()
     async create(
         @Body() player: CreatePlayerDto,
         @UploadedFiles() files: Files,
     ): Promise<Player> {
-        
+
         try {
             return await this.playersService.create(player, files);
         } catch {
@@ -84,17 +105,13 @@ export class PlayersController {
     // @UseGuards(AuthGuard)
     @Patch(':id')
     @ApiResponse({ status: 200, description: 'Update player data.' })
-    @UsePipes(new ConvertDatePipe(['date_of_birth', 'debut']))
-    @UseInterceptors(FileFieldsInterceptor([
-        { name: 'profile_image', maxCount: 1 },
-        { name: 'cover_image', maxCount: 1 },
-    ], { storage: storage('players', ['name', 'surname']) }))
+    @TransformData()
     async update(
         @Param('id', new ParseIntPipe()) id: ID,
         @Body() player: UpdatePlayerDto,
         @UploadedFiles() files: Files,
     ): Promise<Player> {
-        
+
         try {
             return await this.playersService.update(id, player, files);
         } catch {
@@ -106,8 +123,10 @@ export class PlayersController {
     // @UseGuards(AuthGuard)
     @Delete(':id')
     @ApiResponse({ status: 200, description: 'Delete player.' })
-    async delete(@Param('id', new ParseIntPipe()) id: ID): Promise<ID> {
-        
+    async delete(
+        @Param('id', new ParseIntPipe()) id: ID
+    ): Promise<ID> {
+
         try {
             await this.playersService.delete(id);
             return id;

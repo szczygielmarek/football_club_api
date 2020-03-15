@@ -1,4 +1,5 @@
 // TODO:
+// https://github.com/expressjs/multer/blob/master/StorageEngine.md
 // https://medium.com/better-programming/nestjs-file-uploading-using-multer-f3021dfed733
 // https://medium.com/@shamnad.p.s/image-upload-to-aws-s3-using-nestjs-and-typescript-b32c079963e1
 // https://www.npmjs.com/package/nestjs-multer-extended
@@ -10,7 +11,7 @@ import { extname } from 'path';
  * @param  {string[]} names         Body request properties used to determine what the file should be named inside the folder
  * @returns multer.StorageEngine
  */
-export const storage = (destination: string, names: string[]): multer.StorageEngine => {
+export const storageEngine = (destination: string, names: string[]): multer.StorageEngine => {
     return multer.diskStorage({
         destination: `./uploads/${destination}`,
         filename: (req: any, file: Express.Multer.File, cb: any) => {
