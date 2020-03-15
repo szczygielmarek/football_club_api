@@ -4,7 +4,7 @@ import { Inject, InternalServerErrorException, Injectable } from "@nestjs/common
 import { ID } from "src/types";
 // Providers
 import { DATABASE_CONNECTION, DatabaseConnection } from "src/core/database";
-import { AppLogger } from "src/core/log/logger.service";
+import { LoggerService } from "src/core/log/logger.service";
 // Interfaces
 import { PlayersRepositoryInterface } from "../interfaces/players-repository.interface";
 // Models
@@ -26,7 +26,7 @@ export class PlayersRepository implements PlayersRepositoryInterface {
     constructor(
         @Inject(DATABASE_CONNECTION)
         private readonly connection: DatabaseConnection,
-        private readonly logger: AppLogger,
+        private readonly logger: LoggerService,
     ) {
 
         this.logger.setContext('PlayersRepository');

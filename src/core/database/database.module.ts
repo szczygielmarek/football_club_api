@@ -5,6 +5,10 @@ import { ConnectionConfig } from 'mysql';
 import { createDatabaseProvider } from './';
 
 
+/**
+ * The @Global() decorator makes the module global-scoped. 
+ * Global modules should be registered only once, generally by the root or core module. 
+ */
 @Global()
 @Module({})
 export class DatabaseModule {

@@ -12,7 +12,7 @@ import * as path from 'path';
  * - **File** transport for _development_ mode
  */
 @Injectable({ scope: Scope.TRANSIENT })
-export class AppLogger extends Logger {
+export class LoggerService extends Logger {
 
     /**
      * `winston.Logger` object
