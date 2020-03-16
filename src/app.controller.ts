@@ -1,12 +1,23 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Res } from '@nestjs/common';
+import { LoggerService } from './core/log/logger.service';
 
 @Controller()
 export class AppController {
-    constructor() { }
+    constructor(private readonly loggerService: LoggerService) { 
+        this.loggerService.setContext('APP');
+    }
 
     @Get()
     getHello(): string {
-        throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        this.loggerService.log('Info example');
+
+        try {
+            this.loggerService.warn('Warning example');
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        } catch(e) {
+            this.loggerService.error(`[${e.status}] Error example: ${e.message}`, e.stack, 'HHeeb');
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        }
     }
 
     // TODO: fix static files

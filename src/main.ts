@@ -13,12 +13,7 @@ import { LoggerService } from './core/log/logger.service';
 
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule, {
-        logger: false,
-    });
-
-    // Logger
-    app.useLogger(new LoggerService());
+    const app = await NestFactory.create(AppModule, {});
 
     // Validation
     app.useGlobalPipes(new ValidationPipe({

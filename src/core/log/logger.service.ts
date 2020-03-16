@@ -4,6 +4,7 @@ import * as Transport from 'winston-transport';
 import * as WinstonGraylog2 from 'winston-graylog2';
 import * as path from 'path';
 
+
 /**
  * Logger that implements [`winston.Logger`](https://github.com/winstonjs/winston)
  * 
@@ -23,10 +24,8 @@ export class LoggerService extends Logger {
         super();
 
         this._logger = winston.createLogger({
-            level: 'info',
-            format: winston.format.json(),
+            level: 'error',
             exitOnError: false,
-            silent: false,
             transports: this._setTransports(),
         });
     }
@@ -42,17 +41,20 @@ export class LoggerService extends Logger {
             new WinstonGraylog2({
                 name: 'Graylog',
                 level: 'error',
-                silent: false,
-                handleExceptions: true,
+                format: winston.format.combine(
+                    winston.format.errors({ stack: true }),
+                    winston.format.metadata(),
+                ),
                 graylog: {
-                    servers: [{ 
-                        host: process.env.GRAYLOG_HOST || "localhost", 
-                        port: Number(process.env.GRAYLOG_PORT) || 12201 
+                    servers: [{
+                        host: process.env.GRAYLOG_HOST || "localhost",
+                        port: Number(process.env.GRAYLOG_PORT) || 12201
                     }],
+                    facility: 'Nest.js',
                     bufferSize: 262144
                 },
                 staticMeta: {
-                    env: 'prod'
+                    env: process.env.NODE_ENV || 'development'
                 },
             }),
         ];
@@ -64,7 +66,7 @@ export class LoggerService extends Logger {
                     dirname: path.join(__dirname, './../../../log/error/'),
                     filename: 'error.log',
                     level: 'error',
-                    handleExceptions: true,
+                    format: winston.format.json(),
                 }),
             )
 
