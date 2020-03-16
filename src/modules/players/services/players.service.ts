@@ -19,9 +19,9 @@ import { UpdatePlayerDto } from "../dtos/update-player.dto";
 export class PlayersService {
 
     constructor(
+        private readonly config: ConfigService,
         @Inject(STORAGE_ENGINE)
         private readonly storage: StorageEngine,
-        private readonly config: ConfigService,
         private readonly repository: PlayersRepository
     ) { 
         this.storage.setDestination(process.env.PLAYERS_FILES || 'players');

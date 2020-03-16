@@ -1,7 +1,7 @@
 // Core
 import * as fs from 'fs';
 import { extname } from 'path';
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject, Scope } from "@nestjs/common";
 // Types
 import { FilesMetadata, File } from "src/types";
 // Tokens
@@ -9,13 +9,13 @@ import { STORAGE_OPTIONS } from '../constants';
 // Interfaces
 import { StorageEngine } from "../interfaces/storage-engine.interface";
 // Providers
-import { LoggerService } from "src/core/log/logger.service";
+import { LoggerService } from "src/core/log";
 
 
 /**
  * Dist storage Engine
  */
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class DiskStorageEngine implements StorageEngine {
 
     /**

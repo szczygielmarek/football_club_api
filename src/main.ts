@@ -8,8 +8,6 @@ import { ValidationPipe } from '@nestjs/common';
 // Modules
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-// Services
-import { LoggerService } from './core/log/logger.service';
 
 
 async function bootstrap() {

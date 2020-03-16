@@ -1,5 +1,5 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Res } from '@nestjs/common';
-import { LoggerService } from './core/log/logger.service';
+import { LoggerService } from './core/log';
 
 @Controller()
 export class AppController {

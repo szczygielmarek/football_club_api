@@ -2,8 +2,8 @@
 import { Module } from "@nestjs/common";
 // Modules
 import { DatabaseModule } from "./database";
-import { StorageModule } from "./storage/storage.module";
-import { LoggerModule } from "./log/logger.module";
+import { StorageModule } from "./storage";
+import { LoggerModule } from "./log";
 
 
 @Module({

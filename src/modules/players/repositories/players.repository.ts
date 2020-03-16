@@ -4,7 +4,7 @@ import { Inject, InternalServerErrorException, Injectable } from "@nestjs/common
 import { ID } from "src/types";
 // Providers
 import { DATABASE_CONNECTION, DatabaseConnection } from "src/core/database";
-import { LoggerService } from "src/core/log/logger.service";
+import { LoggerService } from "src/core/log";
 // Interfaces
 import { PlayersRepositoryInterface } from "../interfaces/players-repository.interface";
 // Models
