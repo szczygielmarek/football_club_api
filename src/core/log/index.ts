@@ -1,4 +1,4 @@
-import { LoggerService } from './logger.service';
+import { LoggerService } from './services/logger.service';
 import { LoggerModule } from './logger.module';
 
 export {
