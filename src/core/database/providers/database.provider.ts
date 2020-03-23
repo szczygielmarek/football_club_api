@@ -18,7 +18,7 @@ export const createDatabaseConnectionProvider = (options: ConnectionConfig): Pro
             const connection: DatabaseConnection = createConnection(options);
             connection.connect((err) => {
                 if (err) {
-                    logger.error('DB connection error', err.stack, 'DBar0');
+                    logger.error(`[${err.code}] DB connection error: ${err.message}`, err.stack, 'DBar0');
                     throw new InternalServerErrorException();
                 }
             });
@@ -27,7 +27,7 @@ export const createDatabaseConnectionProvider = (options: ConnectionConfig): Pro
                 return new Promise((resolve, reject) => {
                     connection.query(sql, values, (err, rows) => {
                         if (err) {
-                            logger.error(`DB Query Error. SQL: ${sql}, Values: ${values}`, err.stack, 'BCzz1');
+                            logger.error(`[${err.code}] DB connection error: ${err.message}`, err.stack, 'BCzz1');
                             reject(err);
                         }
                         resolve(rows);

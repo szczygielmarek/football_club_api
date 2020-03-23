@@ -13,7 +13,7 @@ import { createDatabaseConnectionProvider } from './providers/database.provider'
  * [`ConnectionConfig`](https://www.npmjs.com/package/mysql#connection-options) 
  * options to create mysql connection.
  * 
- * Module exports provider with token **"DATABASE_CONNECTION"**.
+ * Module exports a provider with token **"DATABASE_CONNECTION"**.
  */
 @Global()
 export class DatabaseModule {

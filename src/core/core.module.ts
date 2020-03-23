@@ -1,13 +1,14 @@
 // Core
 import { Module } from "@nestjs/common";
 // Modules
+import { LoggerModule } from "./log";
 import { DatabaseModule } from "./database";
 import { StorageModule } from "./storage";
-import { LoggerModule } from "./log";
 
 
 @Module({
     imports: [
+        LoggerModule,
         DatabaseModule.register({
             host: process.env.DB_HOST,
             user: process.env.DB_USERNAME,
@@ -25,11 +26,6 @@ import { LoggerModule } from "./log";
                 secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
             }
         }),
-        LoggerModule,
-    ],
-    exports: [
-        DatabaseModule,
-        LoggerModule,
     ]
 })
 export class CoreModule { }

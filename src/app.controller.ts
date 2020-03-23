@@ -1,9 +1,11 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Res } from '@nestjs/common';
 import { LoggerService } from './core/log';
 
+
 @Controller()
 export class AppController {
-    constructor(private readonly loggerService: LoggerService) { 
+
+    constructor(private readonly loggerService: LoggerService) {
         this.loggerService.setContext('APP');
     }
 
@@ -14,7 +16,7 @@ export class AppController {
         try {
             this.loggerService.warn('Warning example');
             throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-        } catch(e) {
+        } catch (e) {
             this.loggerService.error(`[${e.status}] Error example: ${e.message}`, e.stack, 'HHeeb');
             throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
         }

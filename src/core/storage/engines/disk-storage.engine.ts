@@ -27,7 +27,9 @@ export class DiskStorageEngine implements StorageEngine {
         private logger: LoggerService,
         @Inject(STORAGE_OPTIONS) 
         private options,
-    ) { }
+    ) { 
+        logger.setContext('DiskStorageEngine');
+    }
 
     /** @inheritdoc */
     setDestination(path: string): void {
@@ -60,7 +62,7 @@ export class DiskStorageEngine implements StorageEngine {
                         fs.writeFile(path, file.buffer, (err) => {
 
                             if (err) {
-                                this.logger.error('Failed to save files', err.stack, 'UFva2');
+                                this.logger.error(`[${err.code}] Failed to save files: ${err.message}`, err.stack, 'UFva2');
                                 reject(err);
                             };
 

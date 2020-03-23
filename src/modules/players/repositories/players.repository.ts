@@ -107,7 +107,7 @@ export class PlayersRepository implements PlayersRepositoryInterface {
             const players = await this.connection.asyncQuery(sql);
             return nestColumnsFrom(players, ['country', 'citizenship', 'place_of_birth', 'position']);
         } catch (e) {
-            this.logger.error(`getList(page: ${page}, limit: ${limit} search: ${search})`, e, 'HVcpA');
+            this.logger.error(`[${e.code}] DB connection error: ${e.message}`, e.stack, 'BCva1');
             throw new InternalServerErrorException();
         }
     }
@@ -120,7 +120,7 @@ export class PlayersRepository implements PlayersRepositoryInterface {
             const player = await this.connection.asyncQuery(sql, id);
             return nestColumnsFrom(player, ['country', 'citizenship', 'place_of_birth', 'position'])[0];
         } catch (e) {
-            this.logger.error(`getOne(id: ${id})`, e, 'MHopR');
+            this.logger.error(`[${e.code}] DB connection error: ${e.message}`, e.stack, 'MHopR');
             throw new InternalServerErrorException();
         }
     }
@@ -195,7 +195,7 @@ export class PlayersRepository implements PlayersRepositoryInterface {
 
         } catch (e) {
             this.connection.rollback();
-            this.logger.error(`create(player: ${player})`, e, 'HOac1');
+            this.logger.error(`[${e.code}] DB connection error: ${e.message}`, e.stack, 'HOac1');
             throw new InternalServerErrorException();
         }
     }
@@ -302,7 +302,7 @@ export class PlayersRepository implements PlayersRepositoryInterface {
 
         } catch (e) {
             this.connection.rollback();
-            this.logger.error(`update(id: ${id}, player: ${player})`, e, 'HHop2');
+            this.logger.error(`[${e.code}] DB connection error: ${e.message}`, e.stack, 'HHop2');
             throw new InternalServerErrorException();
         }
     }
@@ -324,7 +324,7 @@ export class PlayersRepository implements PlayersRepositoryInterface {
             await this.connection.asyncQuery(sql, id);
             return id;
         } catch (e) {
-            this.logger.error(`delete(id: ${id})`, e, 'DDvh8');
+            this.logger.error(`[${e.code}] DB connection error: ${e.message}`, e.stack, 'DDvh8');
             throw new InternalServerErrorException();
         }
     }
