@@ -6,7 +6,7 @@ import { ApiResponse } from "@nestjs/swagger";
 // Types
 import { ID, FilesMetadata } from "src/types";
 // Pipes
-import { ConvertDatePipe } from "src/shared/pipes/convert-date.pipe";
+import { ConvertDatePipe } from "../../../shared/pipes/convert-date.pipe";
 // Services
 import { PlayersService } from "../services/players.service";
 // Models
@@ -41,7 +41,7 @@ function TransformData(): MethodDecorator {
  */
 @Controller('players')
 export class PlayersController {
-
+    
     constructor(private readonly playersService: PlayersService) { }
 
     /**
@@ -49,18 +49,18 @@ export class PlayersController {
      * 
      * @param {number} page     The subpage
      * @param {number} limit    How many entries should by fetched
-     * @param {string} search   Searched phrase
+     * @param {string} query    Searched phrase
      */
     @Get()
     @ApiResponse({ status: 200, description: 'List players.' })
     async getList(
-        @Query('limit') limit: number,
-        @Query('page') page: number,
-        @Query('search') search: string,
+        @Query('limit') limit?: number,
+        @Query('page') page?: number,
+        @Query('query') query?: string,
     ): Promise<Player[]> {
 
         try {
-            return await this.playersService.getList(limit, page, search);
+            return await this.playersService.getList(limit, page, query);
         } catch {
             throw new NotFoundException('Nie znaleziono żadnych wpisów');
         }
@@ -87,7 +87,7 @@ export class PlayersController {
     @TransformData()
     async create(
         @Body() player: CreatePlayerDto,
-        @UploadedFiles() files: FilesMetadata,
+        @UploadedFiles() files?: FilesMetadata,
     ): Promise<Player> {
 
         try {
@@ -105,7 +105,7 @@ export class PlayersController {
     async update(
         @Param('id', new ParseIntPipe()) id: ID,
         @Body() player: UpdatePlayerDto,
-        @UploadedFiles() files: FilesMetadata,
+        @UploadedFiles() files?: FilesMetadata,
     ): Promise<Player> {
 
         try {

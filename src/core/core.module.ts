@@ -1,7 +1,7 @@
 // Core
 import { Module } from "@nestjs/common";
 // Modules
-import { LoggerModule } from "./log";
+import { LoggerModule } from "./logger";
 import { DatabaseModule } from "./database";
 import { StorageModule } from "./storage";
 

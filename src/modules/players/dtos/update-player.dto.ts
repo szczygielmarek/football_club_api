@@ -1,13 +1,9 @@
 // Validation
-import { IsInt, IsString, IsDate, IsInstance, IsEnum, IsOptional } from 'class-validator';
+import { IsInt, IsString, IsEnum, IsOptional } from 'class-validator';
 // Types
 import { URL, ID } from "src/types";
 // Enums
-import { Foot } from "src/shared/enums";
-// Models
-import { City } from 'src/shared/models/city.model';
-import { Country } from 'src/shared/models/country.model';
-import { Position } from '../models/position.model';
+import { Foot } from "../../../shared/enums";
 
 
 export class UpdatePlayerDto {

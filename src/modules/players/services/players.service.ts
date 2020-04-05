@@ -4,7 +4,7 @@ import { Injectable, Inject } from "@nestjs/common";
 import { ID, FilesMetadata, File } from "src/types";
 // Services
 import { ConfigService } from "@nestjs/config";
-import { StorageEngine, STORAGE_ENGINE } from "src/core/storage";
+import { StorageEngine, STORAGE_ENGINE } from "../../../core/storage";
 import { PlayersRepository } from "../repositories/players.repository";
 // Models
 import { Player } from "../models/player.model";
@@ -56,16 +56,17 @@ export class PlayersService {
      * @param  {FilesMetadata} files
      * @returns Promise
      */
-    async create(player: CreatePlayerDto, files: FilesMetadata): Promise<Player> {
+    async create(player: CreatePlayerDto, files?: FilesMetadata): Promise<Player> {
+        if (files) {
+            const uploadedFiles: File[] = await this.storage.upload(files, [player.name, player.surname]);
 
-        const uploadedFiles: File[] = await this.storage.upload(files, [player.name, player.surname]);
-
-        // add uploaded filenames to player object
-        for (const file of uploadedFiles) {
-            player[file.fieldname] = file.filename;
+            // add uploaded filenames to player object
+            for (const file of uploadedFiles) {
+                player[file.fieldname] = file.filename;
+            }
         }
 
-        return this.repository.create(player);
+        return await this.repository.create(player);
     }
 
     /**
@@ -74,16 +75,17 @@ export class PlayersService {
      * @param  {FilesMetadata} files
      * @returns Promise
      */
-    async update(id: ID, player: UpdatePlayerDto, files: FilesMetadata): Promise<Player> {
+    async update(id: ID, player: UpdatePlayerDto, files?: FilesMetadata): Promise<Player> {
+        if (files) {
+            const uploadedFiles: File[] = await this.storage.upload(files, [player.name, player.surname]);
 
-        const uploadedFiles: File[] = await this.storage.upload(files, [player.name, player.surname]);
-
-        // add uploaded filenames to player object
-        for (const file of uploadedFiles) {
-            player[file.fieldname] = file.filename;
+            // add uploaded filenames to player object
+            for (const file of uploadedFiles) {
+                player[file.fieldname] = file.filename;
+            }
         }
 
-        return this.repository.update(id, player);
+        return await this.repository.update(id, player);
     }
 
     /**
@@ -91,7 +93,7 @@ export class PlayersService {
      * @returns Promise
      */
     async delete(id: ID): Promise<ID> {
-        return this.repository.delete(id);
+        return await this.repository.delete(id);
     }
 
 }

@@ -9,7 +9,7 @@ import { STORAGE_OPTIONS } from '../constants';
 // Interfaces
 import { StorageEngine } from "../interfaces/storage-engine.interface";
 // Providers
-import { LoggerService } from "src/core/log";
+import { LoggerService } from "../../logger";
 
 
 /**

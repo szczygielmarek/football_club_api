@@ -1,6 +1,6 @@
 
 import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
-import { convertToSQLDate } from 'src/helpers/database.helpers';
+import { convertToSQLDate } from '../../helpers/database.helpers';
 
 /**
  * Converts JavaScript date value in ISO format to SQL Date format

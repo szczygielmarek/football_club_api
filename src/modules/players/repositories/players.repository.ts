@@ -3,8 +3,8 @@ import { Inject, InternalServerErrorException, Injectable } from "@nestjs/common
 // Types
 import { ID } from "src/types";
 // Providers
-import { DATABASE_CONNECTION, DatabaseConnection } from "src/core/database";
-import { LoggerService } from "src/core/log";
+import { DATABASE_CONNECTION, DatabaseConnection } from "../../../core/database";
+import { LoggerService } from "../../../core/logger";
 // Interfaces
 import { PlayersRepositoryInterface } from "../interfaces/players-repository.interface";
 // Models
@@ -12,7 +12,7 @@ import { Player } from "../models/player.model";
 import { CreatePlayerDto } from "../dtos/create-player.dto";
 import { UpdatePlayerDto } from "../dtos/update-player.dto";
 // Helpers
-import { nestColumnsFrom } from "src/helpers/database.helpers";
+import { nestColumnsFrom } from "../../../helpers/database.helpers";
 
 
 @Injectable()

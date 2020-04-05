@@ -6,6 +6,11 @@ Based on: <br>
 [Nest](https://github.com/nestjs/nest) - Node.js framework. <br>
 [Winston](https://github.com/winstonjs/winston) - Logging library with support for multiple transports.
 
+Tips: <br>
+https://bulldogjob.pl/news/1029-jak-stworzyc-dobre-api <br>
+https://medium.com/pixelpoint/oh-man-look-at-your-api-22f330ab80d5 <br>
+https://www.youtube.com/watch?v=P9b8-BrWdYs&vl=pl<br>
+
 ## Installation
 
 ```bash

@@ -6,7 +6,7 @@ import { DATABASE_CONNECTION } from './../constants';
 // Interfaces
 import { DatabaseConnection } from "./../interfaces/database-connection.interface";
 // Providers
-import { LoggerService } from "src/core/log";
+import { LoggerService } from "../../logger";
 
 
 export const createDatabaseConnectionProvider = (options: ConnectionConfig): Provider => {
